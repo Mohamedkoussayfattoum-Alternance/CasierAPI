@@ -33,4 +33,4 @@ def occupancy_rate():
     if not lockers:
         return 0.0
     occupied = sum(1 for l in lockers.values() if l.get("status") == "occupied")
-    return round(occupied / len(lockers) * 100, 1)
+    return round(occupied / len(lockers) * 100, 2)
