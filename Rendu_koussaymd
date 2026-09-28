@@ -1,0 +1,130 @@
+# Exercice technique — Alternance DevOps & Cybersécurité
+
+ 1. Pipeline CI (.github/workflows/ci.yml)
+
+J'ai mis en place une intégration continue avec GitHub Actions.
+
+Le pipeline est déclenché :
+- lors d'un `push` sur `main` ;
+- lors d'une Pull Request vers `main` ;
+- manuellement avec `workflow_dispatch`.
+
+Le pipeline réalise les étapes suivantes :
+
+1. Récupération du dépôt.
+2. Installation de Python 3.13.
+3. Installation des dépendances depuis `requirements.txt`.
+4. Exécution des tests avec `pytest`.
+
+Le choix d'un pipeline volontairement simple permet d'avoir un socle rapide et fiable pour détecter les régressions.
+
+Le pipeline a été exécuté avec succès et les 3 tests passent.
+
+![alt text](image.png)
+
+ 2. Conventions d'équipe
+
+ 2.a/
+
+  'Nommage des branches'
+
+J'utiliserais les préfixes suivants :
+
+- `feature/` pour une nouvelle fonctionnalité ;
+- `fix/` pour une correction ;
+- `task/` pour une tâche technique ;
+- `docs/` pour une modification de documentation.
+
+--->Cette convention peut être vérifiée automatiquement.
+
+   'Messages de commit'   
+
+  Fix , Add , Update
+
+ 'Exemples que j'ai fais lors de l'exercice' :
+
+    Commit n°17 : "fixing test fail ( round 1 -->2)"   
+
+Changement du return round(occupied / len(lockers) * 100, 1) à return round(occupied / len(lockers) * 100, 2)
+
+--->Cette convention peut être vérifiée automatiquement.
+
+  'Pull Requests'  PR
+
+Toute modification destinée à main doit passer par une Pull Request.
+
+La Pull Request doit indiquer : ce qui a été modifié ; pourquoi la modification a été réalisée et les tests effectués.
+
+*La CI doit être verte avant le merge.
+
+--->L'obligation de passer par une Pull Request et la réussite de la CI peuvent être imposées automatiquement. La qualité de la description reste une règle d'équipe.
+
+
+  'Revue de code'
+
+Chaque Pull Request doit être revue et approuvée par au moins un autre développeur (Généralement validé par un team Lead ou un manager).
+
+--->Le nombre d'approbations peut être configuré automatiquement dans GitHub. La qualité de la revue reste une responsabilité humaine.
+
+  'Stratégie de merge'
+
+J'utiliserais Squash and merge afin de conserver un historique de main simple et lisible.
+
+--->Cette règle peut être configurée dans GitHub.
+
+
+  2.b/
+
+L'objectif est d'avoir un historique Git clair et compréhensible par toute l'équipe.
+
+1. Avant de commit, identifier la nature principale de la modification.
+2. Utiliser l'un des préfixes :  `fix`, `test`, `docs`, `task`.
+3. Écrire le message sous la forme : `type: description courte`.
+4. Commencer la description par un verbe et rester concis.
+5. Ne pas utiliser de message vague comme `update`, `changes` ou `add`.
+6. Exemple : `fix:  test fail ( round 1 -->2)`.
+7. Vérifier que le commit décrit réellement la modification effectuée.
+8. Garder un commit cohérent, avec une modification logique par commit.
+
+J'ai choisi le nommage des commits parce qu'avec une large équipe contribuant au meme projet, un historique Git lisible permet de comprendre rapidement les modifications apportées par les autres.
+
+-----------------------------
+
+Dans le temps imparti, j'ai privilégié une CI simple centrée sur les tests.
+
+Je n'ai volontairement pas ajouté :
+
+d'analyse de sécurité automatisée ;
+de conteneurisation Docker ;
+de déploiement automatique.
+
+Ces éléments peuvent être ajoutés progressivement après avoir établi le socle CI.
+
+-------------------------------
+
+""Si j'avais une semaine supplémentaire""
+
+-Conteneuriser l'application avec Docker afin d'avoir un environnement d'exécution reproductible et de faciliter son déploiement.
+
+-Intégrer SonarQube dans la CI pour analyser la qualité du code.
+
+-Ajouter un contrôle des dépendances Python afin d'identifier les packages présentant des vulnérabilités connues.
+
+-Améliorer la protection de `main` avec des règles de branche.
+
+
+----------------------------
+
+  "Ce qui m'a manqué"
+
+L'application est volontairement petite, mais certaines informations pourraient aider à aller plus loin :
+
+l'environnement cible ;
+les exigences de sécurité attendues ;
+les contraintes liées à la production.
+
+Ces informations permettraient de choisir plus précisément les contrôles à intégrer au pipeline.
+
+
+-------------------------------
+
